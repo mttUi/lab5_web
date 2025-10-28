@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация на конференцию</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .checkbox-group,
+        .radio-group {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .radio-option {
+            margin: 10px 0;
+        }
+        
+        .radio-option label {
+            display: inline;
+            font-weight: normal;
+            margin-left: 8px;
+        }
+        
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .form-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Регистрация на конференцию</h1>
+        
+        <div class="form-info">
+            <strong>ℹ️ Информация:</strong> Все данные сохраняются в базу данных MySQL
+        </div>
+        
+        <form id="conferenceForm" action="process.php" method="POST">
+            <!-- Имя -->
+            <div class="form-group">
+                <label for="name">ФИО участника <span class="required">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Введите ваше полное имя" required>
+            </div>
+
+            <!-- Год рождения -->
+            <div class="form-group">
+                <label for="birth_year">Год рождения <span class="required">*</span></label>
+                <input type="number" id="birth_year" name="birth_year" min="1900" max="2023" placeholder="Например: 1990" required>
+            </div>
+
+            <!-- Секция -->
+            <div class="form-group">
+                <label for="section">Секция конференции <span class="required">*</span></label>
+                <select id="section" name="section" required>
+                    <option value="">-- Выберите секцию --</option>
+                    <option value="Компьютерные науки">Компьютерные науки</option>
+                    <option value="Искусственный интеллект">Искусственный интеллект</option>
+                    <option value="Веб-разработка">Веб-разработка</option>
+                    <option value="Кибербезопасность">Кибербезопасность</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Мобильная разработка">Мобильная разработка</option>
+                </select>
+            </div>
+
+            <!-- Чекбокс "Нужен сертификат" -->
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="need_certificate" name="need_certificate" value="1">
+                    <label for="need_certificate">Требуется сертификат участника</label>
+                </div>
+            </div>
+
+            <!-- Радио-кнопки "Форма участия" -->
+            <div class="form-group">
+                <label>Форма участия <span class="required">*</span></label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="form_online" name="participation_form" value="Онлайн" required>
+                        <label for="form_online">Онлайн участие</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="form_offline" name="participation_form" value="Очно">
+                        <label for="form_offline">Очное участие</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="form_hybrid" name="participation_form" value="Гибридная">
+                        <label for="form_hybrid">Гибридная форма</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+
+        <div class="nav">
+            <a href="index.php">← На главную страницу</a>
+        </div>
+    </div>
+
+    <script>
+        // Alert перед отправкой
+        document.getElementById("conferenceForm").addEventListener("submit", function(e) {
+            const name = this.name.value;
+            const birthYear = this.birth_year.value;
+            const section = this.section.value;
+            const needCertificate = this.need_certificate.checked ? 'Да' : 'Нет';
+            const participationForm = document.querySelector('input[name="participation_form"]:checked');
+            const formValue = participationForm ? participationForm.value : 'Не выбрано';
+            
+            alert("Проверьте введенные данные:\n\n" +
+                  "ФИО: " + name + "\n" +
+                  "Год рождения: " + birthYear + "\n" + 
+                  "Секция: " + section + "\n" +
+                  "Нужен сертификат: " + needCertificate + "\n" +
+                  "Форма участия: " + formValue + "\n\n" +
+                  "Данные будут сохранены в базу данных MySQL");
+        });
+
+        // Автоматически выбираем текущий год минус 18 лет как максимальный для рождения
+        document.getElementById('birth_year').max = new Date().getFullYear() - 16;
+        document.getElementById('birth_year').min = new Date().getFullYear() - 80;
+    </script>
+</body>
+</html>
